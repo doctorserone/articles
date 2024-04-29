@@ -6,4 +6,5 @@ This repo contains all code related to my posts on Substack, Dev.to and Medium. 
 
 # About me
 
-Hello, I'm Andrés, a software developer on a journey to learn the mysteries of Python Full-Stack :)
+Hello, I'm Andrés, a Java software developer on a journey to learn the mysteries of Python Full-Stack :) Read more about me on:
+- https://andres.alvarezperello.com
