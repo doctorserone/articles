@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tic Magical Line</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/ticmagicalline/css/styles.css">
+
+</head>
+
+<body class="black white-text">
+    <div class="container">
+
+    <nav class="transparent z-depth-0 white-text">
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo">
+                <span class="truncate hide-on-small-only">Tic Magical Line</span>
+                <span class="truncate hide-on-med-and-up">Magical</span>
+            </a>
+            <a href="#" data-target="mobile-sidebar" class="sidenav-trigger black white-text"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li class="active"><a class="lime-text text-lighten-1" href="/"><i class="material-icons left lime-text text-lighten-1">home</i>Start</a></li>
+                <li>
+                    {% if user.is_authenticated %}
+                        <a href="/logout"><i class="material-icons left">close</i>Logout {{ user.username }}</a>
+                    {% else %}
+                        <a href="/"><i class="material-icons left">person</i>Login</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="sidenav teal darken-3 white-text" id="mobile-sidebar">
+        <li style="margin: 0;">
+            <img src="/static/ticmagicalline/img/mainDragonSmall.png" alt="Main Dragon" style="width: 100%;" />
+        </li>
+
+        <li class="active"><a class="lime-text text-lighten-1" href="/"><i class="material-icons left lime-text text-lighten-1">home</i>Start</a></li>
+        <li>
+            {% if user.is_authenticated %}
+                <a href="/logout"><i class="material-icons left">close</i>Logout {{ user.username }}</a>
+            {% else %}
+                <a href="/"><i class="material-icons left">person</i>Login</a>
+            {% endif %}
+        </li>
+    </ul>
+
+    <img src="/static/ticmagicalline/img/jewelBar.png" style="width: 100%;" />
+
+    <div id="content">
+        {% if user.is_authenticated %}
+
+        <div class="row">
+            <div class="col s12 m6">
+        
+                <div class="card teal darken-3">
+                    <div class="card-content white-text center-align">
+        
+                        <span class="card-title">New PvP game</span>
+                        <p>Battle against other adventurers.</p>
+        
+                        <form method="post" action="/create">
+                            <input type="hidden" name="type" value="pvp" />
+                            {% csrf_token %}
+
+                            <div class="center-align">
+                                <button class="btn waves-effect waves-light light-green darken-3 white-text" type="submit" name="action">
+                                    <i class="material-icons left">security</i> Fight
+                                </button>
+                            </div>
+                        </form>
+        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="col s12 m6">
+
+                <div class="card teal darken-3">
+                    <div class="card-content white-text center-align">
+        
+                        <span class="card-title">New PvE game</span>
+                        <p>Battle against the dragons.</p>
+        
+                        <form method="post" action="/create">
+                            <input type="hidden" name="type" value="pve" />
+                            {% csrf_token %}
+
+                            <div class="center-align">
+                                <button class="btn waves-effect waves-light light-green darken-3 white-text" type="submit" name="action">
+                                    <i class="material-icons left">security</i> Fight
+                                </button>
+                            </div>
+                        </form>
+        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col s12">
+        
+                <h2>My active games</h2>
+    
+                <div class="row">
+                {% for game in myGames %}
+
+                    <div class="col s12 m6 l3">
+                        <div class="card teal darken-4">
+                            <div class="card-content white-text center-align">
+        
+                                <p class="truncate">
+                                    {% if game.user_x == None %}
+                                        Waiting for opponent...
+                                    {% else %}
+                                        Game against <b>{{ game.user_o.username }}</b>
+                                    {% endif %}
+                                </p>
+
+                                <a class="btn waves-effect waves-light light-green darken-3 white-text" href="/play/{{ game.id }}">
+                                    <i class="material-icons left">send</i> Play
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                {% empty %}
+
+                    <div class="col s12">
+                        You have no active games at this moment. Create one with the buttons above.
+                    </div>
+
+                {% endfor %}
+                </div>
+
+                <h2>Games waiting for opponent</h2>
+
+                <div class="row">
+                {% for game in openedGames %}
+
+                    <div class="col s12 m6 l3">
+                        <div class="card teal darken-4">
+                            <div class="card-content white-text center-align">
+        
+                                <p class="truncate">
+                                    Game created by <b>{{ game.user_o.username }} </b>
+                                </p>
+                                
+                                <a class="btn waves-effect waves-light light-green darken-3 white-text" href="/join/{{ game.id }}">
+                                    <i class="material-icons left">verified_user</i> Join
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                {% empty %}
+
+                    <div class="col s12">
+                        There are no opened games at this moment. Create one with the buttons above.
+                    </div>
+
+                {% endfor %}
+                </div>
+
+                <h2>Finalized games</h2>
+    
+                <div class="row">
+                {% for game in finalizedGames %}
+
+                    <div class="col s12 m6 l3">
+                        <div class="card teal darken-4">
+                            <div class="card-content white-text center-align">
+        
+                                <p class="truncate">
+                                    <b>{{ game.user_o.username }}</b> vs <b>{{ game.user_x.username }}</b>
+                                </p>
+
+                                <p class="truncate">
+                                    {% if game.winner == 'O'%}
+                                        Winner was {{ game.user_o.username }}
+                                    {% elif game.winner == 'X' %}
+                                        Winner was {{ game.user_x.username }}
+                                    {% else %}
+                                        The game ended as draw
+                                    {% endif %}
+                                </p>
+
+                                <a class="btn waves-effect waves-light light-green darken-3 white-text" href="/play/{{ game.id }}">
+                                    <i class="material-icons left">send</i> View
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                {% empty %}
+
+                    <div class="col s12">
+                        You have no finalized games at this moment. Create one with the buttons above.
+                    </div>
+
+                {% endfor %}
+                </div>
+
+            </div>
+        </div>
+        
+
+        {% else %}
+
+            <div class="row">
+                <div class="col s12 m4 l3">
+            
+                    <div class="card teal darken-3">
+                        <div class="card-content white-text center-align">
+            
+                            <span class="card-title">Enter and play</span>
+                            <p>Your user will be created if does not exists.</p>
+            
+                            <form method="post" action="{% url 'login' %}">
+                                {% csrf_token %}
+            
+                                <div class="input-field">
+                                    <input id="username" name="username" type="text" class="validate browser-default black white-text login-field" required />
+                                </div>
+                                <div class="input-field">
+                                    <input id="password" name="password" type="password" class="validate browser-default black white-text login-field" required />
+                                </div>
+            
+                                <button class="btn waves-effect waves-light light-green darken-3 white-text" type="submit" name="action">Enter
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </form>
+            
+                        </div>
+                    </div>
+                    
+                </div>
+            
+                <div class="col s12 m8 l9">
+            
+                    <h2>Welcome to the dragon's lair</h2>
+                    <p>
+                        You're a brave adventurer in a seek for treasure and glory. And defeat a dragon will garantize both. 
+                        Grab your sword, your wand or your dagger and cross the door of the dragon's lair. Good luck!
+                    </p>
+            
+                    <h2>About Tic Magical Line</h2>
+                    <p>
+                        This game is an experiment made by <a href="https://substack.com/@andresalvareziglesias">Andrés Álvarez Iglesias</a>
+                        to learn how to make a web application with Python, Django, NGINX, Docker and PostgreSQL/TimescaleDB. 
+                    </p>
+                    <p>
+                        All the process has been documented in a serie of posts in <a href="https://substack.com/@andresalvareziglesias">Substack</a>, 
+                        and the source code is freely available in <a href="https://github.com/doctorserone/tic-magical-line">GitHub</a>.
+                    </p>
+            
+                    <p>
+                        <img src="/static/ticmagicalline/img/mainDragon.png" alt="Main Dragon" style="width: 100%;" />
+                    </p>
+            
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/static/ticmagicalline/js/functions.js"></script>
+       
+    </div>     
+</body>
+
+</html>

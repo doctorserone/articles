@@ -1,0 +1,1 @@
+FROM timescale/timescaledb-ha:pg16

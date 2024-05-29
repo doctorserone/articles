@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Error :: Tic Magical Line</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/ticmagicalline/css/styles.css">
+
+</head>
+
+<body class="black white-text">
+    <div class="container">
+
+    <nav class="transparent z-depth-0 white-text">
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo">
+                <span class="truncate hide-on-small-only">Tic Magical Line</span>
+                <span class="truncate hide-on-med-and-up">Magical</span>
+            </a>
+            <a href="#" data-target="mobile-sidebar" class="sidenav-trigger black white-text"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li class="active"><a class="lime-text text-lighten-1" href="/"><i class="material-icons left lime-text text-lighten-1">home</i>Start</a></li>
+                <li>
+                    {% if user.is_authenticated %}
+                        <a href="/logout"><i class="material-icons left">close</i>Logout {{ user.username }}</a>
+                    {% else %}
+                        <a href="/"><i class="material-icons left">person</i>Login</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="sidenav blue-grey darken-3 white-text" id="mobile-sidebar">
+        <li style="margin: 0;">
+            <img src="/static/ticmagicalline/img/mainDragonSmall.png" alt="Main Dragon" style="width: 100%;" />
+        </li>
+
+        <li class="active"><a class="lime-text text-lighten-1" href="/"><i class="material-icons left lime-text text-lighten-1">home</i>Start</a></li>
+        <li>
+            {% if user.is_authenticated %}
+                <a href="/logout"><i class="material-icons left">close</i>Logout {{ user.username }}</a>
+            {% else %}
+                <a href="/"><i class="material-icons left">person</i>Login</a>
+            {% endif %}
+        </li>
+    </ul>
+
+    <img src="/static/ticmagicalline/img/jewelBar.png" style="width: 100%;" />
+
+    <div id="content" class="center-align">
+        <p><i class="material-icons red-text" style="font-size: 150px; margin: 24px;">error</i></p>
+        <p class="red-text text-lighten-3" style="font-size: 24px; margin-bottom: 24px;">{{ message }}</p>
+        <a class="btn waves-effect waves-light red darken-3 white-text" href="{{ returnUrl }}">
+            <i class="material-icons left">chevron_left</i> Return
+        </a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/static/ticmagicalline/js/functions.js"></script>
+       
+    </div>     
+</body>
+
+</html>

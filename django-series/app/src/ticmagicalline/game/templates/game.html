@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Game :: Tic Magical Line</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/ticmagicalline/css/styles.css">
+
+</head>
+
+<body class="black white-text">
+    <div class="container">
+
+    <nav class="transparent z-depth-0 white-text">
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo">
+                <span class="truncate hide-on-small-only">Tic Magical Line</span>
+                <span class="truncate hide-on-med-and-up">Game board</span>
+            </a>
+            <a href="#" data-target="mobile-sidebar" class="sidenav-trigger black white-text"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/"><i class="material-icons left">home</i>Start</a></li>
+                <li class="active"><a class="lime-text text-lighten-1" href="/play/{{ id }}"><i class="material-icons left lime-text text-lighten-1">apps</i>Game</a></li>
+                <li><a href="/logout"><i class="material-icons left">close</i>Logout {{ user.username }}</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="sidenav blue-grey darken-3 white-text" id="mobile-sidebar">
+        <li style="margin: 0;">
+            <img src="/static/ticmagicalline/img/mainDragonSmall.png" alt="Main Dragon" style="width: 100%;" />
+        </li>
+
+        <li><a href="/"><i class="material-icons left">home</i>Start</a></li>
+        <li class="active"><a class="lime-text text-lighten-1" href="/play/{{ id }}"><i class="material-icons left lime-text text-lighten-1">apps</i>Game</a></li>
+        <li><a href="/logout"><i class="material-icons left">close</i>Logout {{ user.username }}</a></li>
+    </ul>
+
+    <img src="/static/ticmagicalline/img/jewelBar.png" style="width: 100%;" />
+
+    <div id="content">
+        <div class="row">
+            
+            <div class="top-game-message">{{ currentStatus }}</div>
+
+            <div class="col s12 m8 l9">
+                <div class="board-square">
+                    {% if ommitPlayAction == 0 %}
+
+                        <div class="board-inner-square" onclick="play({{ id }}, 0);"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"0:1" }}.png" /></div>
+                        <div class="board-inner-square" onclick="play({{ id }}, 1);"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"1:2" }}.png" /></div>
+                        <div class="board-inner-square" onclick="play({{ id }}, 2);"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"2:3" }}.png" /></div>
+                        <div style="clear: both; height: 0;"></div>
+                        <div class="board-inner-square" onclick="play({{ id }}, 3);"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"3:4" }}.png" /></div>
+                        <div class="board-inner-square" onclick="play({{ id }}, 4);"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"4:5" }}.png" /></div>
+                        <div class="board-inner-square" onclick="play({{ id }}, 5);"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"5:6" }}.png" /></div>
+                        <div style="clear: both; height: 0;"></div>
+                        <div class="board-inner-square" onclick="play({{ id }}, 6);"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"6:7" }}.png" /></div>
+                        <div class="board-inner-square" onclick="play({{ id }}, 7);"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"7:8" }}.png" /></div>
+                        <div class="board-inner-square" onclick="play({{ id }}, 8);"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"8:"   }}.png" /></div>
+                        <div style="clear: both; height: 0;"></div>
+
+                    {% else %}
+
+                        <div class="board-inner-square default-cursor"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"0:1" }}.png" /></div>
+                        <div class="board-inner-square default-cursor"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"1:2" }}.png" /></div>
+                        <div class="board-inner-square default-cursor"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"2:3" }}.png" /></div>
+                        <div style="clear: both; height: 0;"></div>
+                        <div class="board-inner-square default-cursor"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"3:4" }}.png" /></div>
+                        <div class="board-inner-square default-cursor"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"4:5" }}.png" /></div>
+                        <div class="board-inner-square default-cursor"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"5:6" }}.png" /></div>
+                        <div style="clear: both; height: 0;"></div>
+                        <div class="board-inner-square default-cursor"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"6:7" }}.png" /></div>
+                        <div class="board-inner-square default-cursor"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"7:8" }}.png" /></div>
+                        <div class="board-inner-square default-cursor"><img src="/static/ticmagicalline/img/tile{{ game.board | slice:"8:"   }}.png" /></div>
+                        <div style="clear: both; height: 0;"></div>
+                        
+                    {% endif %}
+                </div>
+            </div>
+    
+            <div class="col s12 m4 l3">
+
+                <h2>Game info</h2>
+                <ul>
+                    <li><b>Player O: </b>  {% if game.user_o %} {{ game.user_o.username }} {% else %} <i>Nobody yet...</i> {% endif %}</li>
+                    <li><b>Player X: </b> {{ game.user_x.username }}</li>
+                    <li><b>Creation: </b> {{ game.creation | date:'d-m-Y H:i:s' }}</li>
+                    <li><b>Last move: </b> {{ game.last_move | date:'d-m-Y H:i:s' }}</li>
+                </ul>
+        
+                <h2>Latest movements:</h2>
+
+                <ul>
+                {% for movement in movements %}
+
+                    {% if movement.symbol == 'C' %}
+                        <li><b>{{ movement.date | date:'d-m-Y H:i:s' }}:</b> The user <b>{{ movement.user.username }}</b> has created the game</li>
+                    {% elif movement.symbol == 'J' %}
+                        <li><b>{{ movement.date | date:'d-m-Y H:i:s' }}:</b> The user <b>{{ movement.user.username }}</b> has joined to the game</li>
+                    {% elif movement.symbol == 'X' %}
+                        <li><b>{{ movement.date | date:'d-m-Y H:i:s' }}:</b> The user <b>{{ movement.user.username }}</b> has played a X on position {{ movement.movement }}</li>
+                    {% elif movement.symbol == 'O' %}
+                        <li><b>{{ movement.date | date:'d-m-Y H:i:s' }}:</b> The user <b>{{ movement.user.username }}</b> has played a O on position {{ movement.movement }}</li>
+                    {% else %}
+                        <li><b>{{ movement.date | date:'d-m-Y H:i:s' }}:</b> The user <b>{{ movement.user.username }}</b> has make an unsupported movement ({{ movement.symbol }})?</li>
+                    {% endif %}
+
+                {% empty %}
+
+                    <li>There are no movements...</li>
+
+                {% endfor %}
+                </ul>
+        
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/static/ticmagicalline/js/functions.js"></script>
+        
+    </div>
+</body>
+
+</html>

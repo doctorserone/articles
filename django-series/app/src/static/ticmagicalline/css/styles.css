@@ -1,0 +1,108 @@
+body {
+    background-color: #000;
+    color: #fff;
+    margin: 8px 16px;
+}
+
+.sidenav-overlay {
+    height: 0px;
+    width: 0px;
+}
+
+.sidenav {
+    width: 240px;
+    border-right: 3px solid #000;
+}
+
+.sidenav li.active {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.sidenav li, .sidenav li>a, .sidenav li>a>i, nav ul li>a, nav ul li>a:hover, nav ul li>a>i, nav ul li>a>i:hover {
+    color: #fff !important;
+}
+
+nav ul li.active {
+    color: #d4e157 !important;
+    font-weight: bold;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 0 auto
+}
+
+h2 {
+    font-size: 24px;
+    margin: 0 0 16px 0;
+    padding: 0;
+    line-height: 24px;
+    color: #d4e157 !important;
+    font-weight: bold;
+}
+
+p {
+    margin: 0 0 16px 0;
+    padding: 0;
+}
+
+a {
+    color: #b3c03e !important;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #d4e157 !important;
+}
+
+.login-field {
+    width: 100%;
+    padding: 4px;
+    height: 24px;
+    font-size: 20px;
+    line-height: 24px;
+    color: #fff !important;
+    background-color: #000 !important;
+}
+
+.card .card-content p {
+    margin: 0 0 16px 0;
+}
+
+.board-square {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #b3c03e;
+    border-radius: 8px;
+    padding: 32px;
+    margin-bottom: 24px;
+}
+
+.board-inner-square {
+    width: calc(33% - 2px);
+    float: left;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.default-cursor {
+    cursor: default !important;
+}
+
+.board-inner-square img {
+    width: 100%;
+}
+
+.top-game-message {
+    text-align: center;
+    font-size: 24px;
+    margin: 0 0 16px 0;
+    color: #fff;
+}
+
+@media (max-width: 600px) {
+    .board-square {
+        padding: 16px;
+    }
+}
