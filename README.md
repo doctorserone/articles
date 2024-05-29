@@ -20,6 +20,8 @@ Note that is NOT a finished project, it was just createrd to showcase the topics
 - https://andresalvareziglesias.substack.com/p/django-6-using-the-django-orm
 - https://andresalvareziglesias.substack.com/p/django-7-users-login-logout-and-register
 - https://andresalvareziglesias.substack.com/p/django-8-implementing-the-game-in
+- https://andresalvareziglesias.substack.com/p/django-9-scheduled-tasks
+- https://andresalvareziglesias.substack.com/p/django-10-implementing-tictactoe
 
 # About me
 
